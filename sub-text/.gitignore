@@ -1,0 +1,18 @@
+# Logic
+node_modules/
+__pycache__/
+.env
+.venv/
+env/
+venv/
+dist/
+build/
+.DS_Store
+.vscode/
+.idea/
+*.log
+coverage/
+.pytest_cache/
+chroma_db/
+temp_*
+*.pdf
