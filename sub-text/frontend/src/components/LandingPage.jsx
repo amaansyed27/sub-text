@@ -5,6 +5,13 @@ import { useNavigate } from "react-router-dom";
 export default function LandingPage() {
     const navigate = useNavigate();
 
+    const scrollToSection = (id) => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
     return (
         <div className="min-h-screen bg-paper flex flex-col relative overflow-hidden">
             {/* Navbar */}
@@ -27,9 +34,18 @@ export default function LandingPage() {
                 </motion.div>
 
                 <div className="hidden md:flex gap-8 font-bold font-mono text-sm">
-                    <button className="hover:underline decoration-2 underline-offset-4 decoration-wavy">MANIFESTO</button>
-                    <button className="hover:underline decoration-2 underline-offset-4 decoration-wavy">HOW_IT_WORKS</button>
-                    <button className="hover:underline decoration-2 underline-offset-4 decoration-wavy">PRICING</button>
+                    <button
+                        onClick={() => scrollToSection('manifesto')}
+                        className="hover:underline decoration-2 underline-offset-4 decoration-wavy"
+                    >
+                        MANIFESTO
+                    </button>
+                    <button
+                        onClick={() => scrollToSection('how-it-works')}
+                        className="hover:underline decoration-2 underline-offset-4 decoration-wavy"
+                    >
+                        HOW_IT_WORKS
+                    </button>
                 </div>
 
                 <motion.button
@@ -45,7 +61,7 @@ export default function LandingPage() {
             </nav>
 
             {/* Hero Section */}
-            <main className="flex-grow flex flex-col items-center justify-center text-center p-6 relative z-10">
+            <main id="manifesto" className="flex-grow flex flex-col items-center justify-center text-center p-6 relative z-10">
                 <motion.div
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -86,10 +102,76 @@ export default function LandingPage() {
                         </div>
                     </div>
                 </motion.div>
+                <motion.div
+                    id="how-it-works"
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                    className="mt-24 w-full max-w-6xl mx-auto"
+                >
+                    <div className="text-center mb-12">
+                        <h2 className="text-3xl font-black mb-4">HOW_IT_WORKS</h2>
+                        <div className="w-24 h-2 bg-ink mx-auto"></div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
+                        {/* Connecting Line (Desktop) */}
+                        <div className="hidden md:block absolute top-1/2 left-0 w-full h-1 bg-gray-300 -z-10 -translate-y-1/2 border-t-2 border-dashed border-ink/30"></div>
+
+                        {/* STEP 1: UPLOAD */}
+                        <motion.div
+                            whileHover={{ y: -10 }}
+                            className="bg-white border-3 border-ink p-6 shadow-brutal flex flex-col items-center gap-4 relative"
+                        >
+                            <div className="w-12 h-12 bg-gray-200 border-2 border-ink flex items-center justify-center font-bold font-mono text-xl">1</div>
+                            <h3 className="font-bold text-xl uppercase">Upload</h3>
+                            <p className="font-mono text-xs text-justify">
+                                Multi-page PDF parsing using <span className="underline decoration-wavy">PyMuPDF</span>.
+                                Documents are chunked into semantic vectors.
+                            </p>
+                        </motion.div>
+
+                        {/* STEP 2: EMBED */}
+                        <motion.div
+                            whileHover={{ y: -10 }}
+                            className="bg-white border-3 border-ink p-6 shadow-brutal flex flex-col items-center gap-4 relative"
+                        >
+                            <div className="w-12 h-12 bg-black text-white flex items-center justify-center font-bold font-mono text-xl">2</div>
+                            <h3 className="font-bold text-xl uppercase">Vectorize</h3>
+                            <p className="font-mono text-xs text-justify">
+                                Content is embedded via <span className="bg-yellow-300 px-1">Gemini Embeddings</span> and stored in a local ChromaDB vector store.
+                            </p>
+                        </motion.div>
+
+                        {/* STEP 3: ANALYZE */}
+                        <motion.div
+                            whileHover={{ y: -10 }}
+                            className="bg-white border-3 border-ink p-6 shadow-brutal flex flex-col items-center gap-4 relative"
+                        >
+                            <div className="w-12 h-12 bg-gray-200 border-2 border-ink flex items-center justify-center font-bold font-mono text-xl">3</div>
+                            <h3 className="font-bold text-xl uppercase">Reasoning</h3>
+                            <p className="font-mono text-xs text-justify">
+                                <span className="font-bold text-blue-600">Gemini 3 Flash</span> Agent keeps a "Logic Loop" to identify hidden risks across 5+ legal categories.
+                            </p>
+                        </motion.div>
+
+                        {/* STEP 4: REPORT */}
+                        <motion.div
+                            whileHover={{ y: -10 }}
+                            className="bg-white border-3 border-ink p-6 shadow-brutal flex flex-col items-center gap-4 relative"
+                        >
+                            <div className="w-12 h-12 bg-black text-white flex items-center justify-center font-bold font-mono text-xl">4</div>
+                            <h3 className="font-bold text-xl uppercase">Report</h3>
+                            <p className="font-mono text-xs text-justify">
+                                A high-contrast Neo-Brutalist dashboard presents the Executive Summary, Red Flags, and Chat interface.
+                            </p>
+                        </motion.div>
+                    </div>
+                </motion.div>
             </main>
 
             {/* Scrolling Ticker */}
-            <div className="border-t-3 border-b-3 border-ink bg-gray-100 py-3 overflow-hidden">
+            <div className="border-t-3 border-b-3 border-ink bg-gray-100 py-3 overflow-hidden relative z-20">
                 <div className="animate-marquee whitespace-nowrap font-mono font-bold text-lg flex gap-12 text-ink/80">
                     <span>⚠️ HIDDEN FEES DETECTED</span>
                     <span>👁️ DATA PRIVACY RISKS</span>
