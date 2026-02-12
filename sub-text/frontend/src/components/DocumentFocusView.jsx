@@ -21,13 +21,19 @@ export default function DocumentFocusView({ report, fileUrl }) {
         return "bg-blue-400";
     };
 
-    // Construct the PDF URL with page fragment
-    // Note: We use a key on the iframe to force reload if needed, 
-    // but typically changing src hash might not trigger reload in all browsers.
-    // However, for blobs, it often works or requires a slight trick.
-    // Let's rely on standard #page=X behavior first.
+    // Helper to clean quotes for Text Fragments
+    const cleanQuote = (quote) => {
+        if (!quote) return "";
+        // Take the first 30 chars, remove special chars, and trimming
+        // We use a shorter snippet to increase match likelihood
+        const snippet = quote.replace(/[\n\r]+/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 30);
+        return encodeURIComponent(snippet);
+    };
+
+    // Construct the PDF URL with Text Fragment for native highlighting
+    // Syntax: #:~:text=[prefix-,]text_start[,text_end][,-suffix]
     const pdfSrc = currentRisk?.page_number
-        ? `${fileUrl}#page=${currentRisk.page_number}`
+        ? `${fileUrl}#page=${currentRisk.page_number}&:~:text=${cleanQuote(currentRisk.quote)}`
         : fileUrl;
 
     return (

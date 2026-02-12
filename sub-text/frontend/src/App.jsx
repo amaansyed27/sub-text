@@ -20,7 +20,27 @@ function App() {
     navigate('/dashboard')
   }
 
-  // Handle Clean Cleanup
+  // Persistence Logic
+  useEffect(() => {
+    const savedReport = sessionStorage.getItem("analysis_report");
+    if (savedReport) {
+      try {
+        setReport(JSON.parse(savedReport));
+        // If we have a report, go to dashboard (File will be missing, but that's okay)
+        if (location.pathname === '/') navigate('/dashboard');
+      } catch (e) {
+        console.error("Failed to parse saved report", e);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (report) {
+      sessionStorage.setItem("analysis_report", JSON.stringify(report));
+    }
+  }, [report]);
+
+  // Handle File Cleanup
   useEffect(() => {
     return () => {
       if (fileUrl) URL.revokeObjectURL(fileUrl)
