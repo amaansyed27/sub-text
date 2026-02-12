@@ -1,0 +1,49 @@
+**Topic:** Subtext: The AI Contract Auditor
+**Tone:** Professional, Bold, "Neo-Brutalist", High-Tech
+**Format:** Pitch Deck / Hackathon Presentation
+
+**Outline & Content to Generate:**
+
+1.  **Title Slide**
+    *   Title: SUBTEXT
+    *   Subtitle: "Don't Sign Your Soul."
+    *   Visual Idea: Dark, gritty aesthetic with a glowing lock or document.
+
+2.  **The Problem: The "I Agree" Lie**
+    *   People never read Terms & Conditions.
+    *   They are intentionally designed to be boring and long (average 50+ pages).
+    *   Hidden Dangers: Selling data, forced arbitration, hidden fees, IP theft.
+    *   *Stat suggestion*: "91% of people consent to legal terms without reading them."
+
+3.  **The Solution: Agentic RAG**
+    *   **Subtext** is NOT just a summarizer. It is an **Autonomous Auditor**.
+    *   It uses **Retrieval-Augmented Generation (RAG)** to "read" the document like a lawyer.
+    *   It indexes the entire contract, then "queries" itself for specific risks.
+
+4.  **Deep Dive: The RAG Architecture (The Brain)**
+    *   **1. Ingest**: PyMuPDF extracts text page-by-page.
+    *   **2. Embed**: Google Gemini Embeddings turn text into "Semantic Vectors".
+    *   **3. Index**: We build a local "Knowledge Graph" of the contract in **ChromaDB**.
+    *   **4. Reason**: The **Gemini 3 Flash Agent** loops through categories (Privacy, Liability) and retrieves *only* the relevant clauses to analyze.
+
+5.  **Key Features (Showcase)**
+    *   **Neo-Brutalist UI**: "Paper & Ink" design for maximum readability.
+    *   **Proof of Work**: Click a risk → Jump straight to the **exact page** in the PDF.
+    *   **AI Chat**: Ask questions like "Can they sell my photos?" and get cited answers from the vector store.
+    *   **Real-Time Scoring**: A "Safety Score" derived from the severity of RAG findings.
+
+6.  **Tech Stack**
+    *   **Frontend**: React + Vite + TailwindCSS.
+    *   **Backend**: Python FastAPI.
+    *   **AI Core**: Google Gemini 3 Flash + Vertex AI.
+    *   **Database**: ChromaDB (Vector Search).
+    *   **Deployment**: Google Cloud Run + Vercel.
+
+7.  **Future Roadmap**
+    *   Browser Extension popup.
+    *   "Compare" feature (compare 2023 vs 2024 Terms).
+    *   Mobile App.
+
+8.  **Conclusion**
+    *   Call to Action: Try Subtext today.
+    *   Tagline: "Reclaim your consent."

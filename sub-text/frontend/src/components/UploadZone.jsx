@@ -17,13 +17,21 @@ export default function UploadZone({ onUpload }) {
 
         setIsLoading(true);
         setError(null);
+        setUploadProgress(0); // Reset progress at the start
 
         const formData = new FormData();
         formData.append("file", file);
 
         try {
-            const response = await axios.post("http://127.0.0.1:8000/analyze", formData, {
-                headers: { "Content-Type": "multipart/form-data" },
+            const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+            const response = await axios.post(`${apiUrl}/analyze`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+                onUploadProgress: (progressEvent) => {
+                    const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                    setUploadProgress(percentCompleted);
+                }
             });
             onUpload(response.data, file);
         } catch (err) {
@@ -31,6 +39,7 @@ export default function UploadZone({ onUpload }) {
             setError("SERVER_ERROR: ANALYSIS_FAILED");
         } finally {
             setIsLoading(false);
+            setUploadProgress(0); // Reset progress on completion or error
         }
     };
 
