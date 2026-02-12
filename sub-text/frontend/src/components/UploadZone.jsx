@@ -26,9 +26,6 @@ export default function UploadZone({ onUpload }) {
         try {
             const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
             const response = await axios.post(`${apiUrl}/analyze`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
                 onUploadProgress: (progressEvent) => {
                     const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
                     setUploadProgress(percentCompleted);
