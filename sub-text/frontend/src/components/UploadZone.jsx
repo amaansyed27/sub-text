@@ -6,6 +6,7 @@ import axios from "axios";
 export default function UploadZone({ onUpload }) {
     const [isDragging, setIsDragging] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [uploadProgress, setUploadProgress] = useState(0);
     const [error, setError] = useState(null);
     const fileInputRef = useRef(null);
 
@@ -97,8 +98,8 @@ export default function UploadZone({ onUpload }) {
                                 <motion.div
                                     className="h-full bg-ink relative"
                                     initial={{ width: "0%" }}
-                                    animate={{ width: "100%" }}
-                                    transition={{ duration: 2.5, ease: "easeInOut" }}
+                                    animate={{ width: `${Math.max(uploadProgress, 5)}%` }}
+                                    transition={{ duration: 0.5, ease: "easeInOut" }}
                                 >
                                     {/* Glitch Effect Overlay */}
                                     <div className="absolute inset-0 bg-white/20 animate-pulse"></div>
