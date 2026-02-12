@@ -5,33 +5,49 @@ import Dashboard from './components/Dashboard'
 import LandingPage from './components/LandingPage'
 import { AnimatePresence } from 'framer-motion'
 
+import { saveFile, getFile } from './db'
+
 function App() {
   const [report, setReport] = useState(null)
   const [fileUrl, setFileUrl] = useState(null)
   const navigate = useNavigate()
   const location = useLocation()
 
-  const handleUpload = (data, file) => {
+  const handleUpload = async (data, file) => {
     setReport(data)
     if (file) {
       const url = URL.createObjectURL(file)
       setFileUrl(url)
+      try {
+        await saveFile(file);
+      } catch (err) {
+        console.error("Failed to save file", err);
+      }
     }
     navigate('/dashboard')
   }
 
   // Persistence Logic
   useEffect(() => {
-    const savedReport = sessionStorage.getItem("analysis_report");
-    if (savedReport) {
-      try {
-        setReport(JSON.parse(savedReport));
-        // If we have a report, go to dashboard (File will be missing, but that's okay)
-        if (location.pathname === '/') navigate('/dashboard');
-      } catch (e) {
-        console.error("Failed to parse saved report", e);
+    const restoreSession = async () => {
+      const savedReport = sessionStorage.getItem("analysis_report");
+      if (savedReport) {
+        try {
+          setReport(JSON.parse(savedReport));
+
+          // Restore File
+          const file = await getFile();
+          if (file) {
+            setFileUrl(URL.createObjectURL(file));
+          }
+
+          if (location.pathname === '/') navigate('/dashboard');
+        } catch (e) {
+          console.error("Failed to restore session", e);
+        }
       }
-    }
+    };
+    restoreSession();
   }, []);
 
   useEffect(() => {
