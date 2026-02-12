@@ -14,16 +14,10 @@ from schemas import AnalysisReport, ChatRequest
 
 app = FastAPI(title="Subtext API", version="1.0.0")
 
-# CORS Middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",
-        "https://sub-text.vercel.app",
-        "https://sub-text.vercel.app/",
-        "*" # Keep wildcard as fallback if specific fails, but usually specific is needed for creds
-    ],
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
