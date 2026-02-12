@@ -10,7 +10,13 @@ import asyncio
 class LegalAgent:
     def __init__(self):
         # Initialize Gemini 3 Client
-        self.client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
+        api_key = os.getenv("GOOGLE_API_KEY")
+        if not api_key:
+            print("WARNING: GOOGLE_API_KEY not found. Agent will fail if called.")
+            self.client = None
+        else:
+            self.client = genai.Client(api_key=api_key)
+            
         # Using gemini-3-flash-preview as requested
         self.model_name = "gemini-3-flash-preview"
         
